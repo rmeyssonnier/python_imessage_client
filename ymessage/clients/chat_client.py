@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pymessage.models.chat import Chat
-from pymessage.clients.client import Client
-from pymessage.models.message import Message
-from pymessage.tools.tools import from_apple_time
+from ymessage.models.chat import Chat
+from ymessage.clients.client import Client
+from ymessage.models.message import Message
+from ymessage.tools.tools import from_apple_time
 
 
 class ChatClient(Client):

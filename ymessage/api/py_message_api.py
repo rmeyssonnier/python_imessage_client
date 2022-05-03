@@ -3,7 +3,7 @@ import json
 import jsonpickle as jsonpickle
 from flask import Flask, request, Response
 
-from pymessage.messaging import Messaging
+from ymessage.messaging import Messaging
 
 
 class PyMessageApi:

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytz
 
-from pymessage.models.contact import Contact
+from ymessage.models.contact import Contact
 
 DATE_OFFSET = 978307200
 

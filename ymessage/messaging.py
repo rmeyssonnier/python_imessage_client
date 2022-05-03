@@ -1,11 +1,11 @@
 import os
 from typing import Optional
-from pymessage.models.chat import Chat
-from pymessage.clients.chat_client import ChatClient
-from pymessage.models.contact import Contact
-from pymessage.clients.contact_client import ContactClient
+from ymessage.models.chat import Chat
+from ymessage.clients.chat_client import ChatClient
+from ymessage.models.contact import Contact
+from ymessage.clients.contact_client import ContactClient
 from time import sleep
-from pymessage.tools.tools import get_contact_db
+from ymessage.tools.tools import get_contact_db
 
 
 class Messaging:

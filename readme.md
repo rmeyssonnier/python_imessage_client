@@ -1,4 +1,4 @@
-# Python iMessage Client
+# yMessage
 This repository is a python implementation to access chat.db that contains all locals and iCloud message and iMessage.
 
 ## How it works ?

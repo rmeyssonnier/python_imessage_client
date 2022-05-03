@@ -1,5 +1,5 @@
-from pymessage.api.py_message_api import run_api
-from pymessage.messaging import Messaging
+from ymessage.api.py_message_api import run_api
+from ymessage.messaging import Messaging
 
 
 def main():
