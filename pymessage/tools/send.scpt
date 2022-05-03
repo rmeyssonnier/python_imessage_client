@@ -3,6 +3,5 @@ on run {targetBuddyPhone, targetMessage}
         set targetService to 1st service whose service type = iMessage
         set targetBuddy to buddy targetBuddyPhone of targetService
         send targetMessage to targetBuddy
-        say targetMessage
     end tell
 end run

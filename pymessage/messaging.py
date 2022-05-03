@@ -25,14 +25,15 @@ class Messaging:
         self.chat_client.close()
         self.contact_client.close()
 
-    def get_conversations(self) -> [Chat]:
+    def get_all_conversations(self, load_messages=True) -> [Chat]:
         chats = self.chat_client.get_all_chat()
         for chat in chats:
             chat = self.__set_contact_to_chat(chat)
-            chat.messages = self.chat_client.get_messages_for_chat(chat)
+            if load_messages:
+                chat.messages = self.chat_client.get_messages_for_chat(chat)
         return chats
 
-    def get_chat(self, chat_id) -> Optional[Chat]:
+    def get_conversation_by_id(self, chat_id) -> Optional[Chat]:
         chat = self.chat_client.get_chat_by_id(chat_id)
         if chat is None:
             return None
