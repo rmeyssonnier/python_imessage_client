@@ -6,6 +6,6 @@ Messages are stored in ~/Library/Messages/chat.db which is a SQlite3 database.
 This project is openning this database and provide a simple queries.
 
 ## How to use it ?
-Project is build... So, be patient or curious... 🏗
+Project is building... So, be patient or curious... 🏗
 
 Developed by Robin Meyssonnier 🦄
