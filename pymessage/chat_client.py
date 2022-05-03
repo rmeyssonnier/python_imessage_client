@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pymessage.chat import Chat
 from pymessage.client import Client
 from pymessage.message import Message
@@ -11,40 +13,38 @@ class ChatClient(Client):
     def get_last_messages(self, count=10) -> [Message]:
         res = []
         for row in self.cur.execute(
-                'select guid, text, service, date, date_read, destination_caller_id from message order by ROWID desc limit {}'.format(
-                    count)):
-            message = Message()
-            message.guid = row[0]
-            message.text = row[1]
-            message.service = row[2]
-            message.date = from_apple_time(int(row[3]))
-            message.date_read = from_apple_time(int(row[4]))
-            message.destination_caller_id = row[5]
+                'select guid, text, service, date, date_read, destination_caller_id, is_from_me'
+                'from message order by ROWID desc limit {}'.format(count)):
+            message = Message(row[0], row[1], row[2], from_apple_time(int(row[3])), from_apple_time(int(row[4])),
+                              row[5], bool(row[6]))
             res.append(message)
         return res
 
-    def get_all_chat(self):
+    def get_all_chat(self) -> [Chat]:
         res = []
         for row in self.cur.execute(
-                'select guid, chat_identifier, service_name, last_read_message_timestamp, ROWID from chat order by ROWID desc'):
-            chat = Chat()
-            chat.guid = row[0]
-            chat.chat_identifier = row[1]
-            chat.service_name = row[2]
-            chat.last_read_message_timestamp = from_apple_time(int(row[3]))
-            chat.id = int(row[4])
+                'select ROWID, guid, chat_identifier, service_name, last_read_message_timestamp '
+                'from chat order by ROWID desc'):
+            chat = Chat(int(row[0]), row[1], row[2], row[3], from_apple_time(int(row[4])))
             res.append(chat)
         return res
 
+    def get_chat_by_id(self, chat_id) -> Optional[Chat]:
+        row = self.cur.execute(f'select ROWID, guid, chat_identifier, service_name, last_read_message_timestamp \
+                  from chat where ROWID = {chat_id}').fetchone()
+        if row is None:
+            return None
+
+        chat = Chat(int(row[0]), row[1], row[2], row[3], from_apple_time(int(row[4])))
+        return chat
+
     def get_messages_for_chat(self, chat):
         res = []
-        for row in self.cur.execute('select m.guid, m.text, m.service, m.date, m.date_read, m.destination_caller_id from message as m left join chat_message_join cmj on m.ROWID = cmj.message_id where chat_id = {}'.format(chat.id)):
-            message = Message()
-            message.guid = row[0]
-            message.text = row[1]
-            message.service = row[2]
-            message.date = from_apple_time(int(row[3]))
-            message.date_read = from_apple_time(int(row[4]))
-            message.destination_caller_id = row[5]
+        for row in self.cur.execute(f'select m.guid, m.text, m.service, m.date, m.date_read, m.destination_caller_id, m.is_from_me \
+                                    from message as m left join chat_message_join cmj on m.ROWID = cmj.message_id \
+                                    where cmj.chat_id = {chat.id} \
+                                    order by m.date desc '):
+            message = Message(row[0], row[1], row[2], from_apple_time(int(row[3])), from_apple_time(int(row[4])),
+                              row[5], bool(row[6]))
             res.append(message)
         return res

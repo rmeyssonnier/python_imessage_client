@@ -1,29 +1,19 @@
-import glob
-import os
-from pathlib import Path
-
-from pymessage.chat_client import ChatClient
-from pymessage.client import Client
-from pymessage.contact_client import ContactClient
-from pymessage.tools import get_contact_db
+from pymessage.messaging import Messaging
 
 
 def main():
-    home = os.environ['HOME']
-    message_db_path = f'{home}/Library/Messages/chat.db'
-    contact_db_path = get_contact_db('/Users/robinmeyssonnier/Library/Application Support/AddressBook/')
+    messaging = Messaging()
+    messaging.init()
 
-    message_client = ChatClient(message_db_path)
-    message_client.connect()
-    chats = message_client.get_all_chat()
-    messages = message_client.get_messages_for_chat(chats[2])
-    message_client.close()
+    for c in messaging.get_conversations():
+        print(c)
 
-    contact_client = ContactClient(contact_db_path)
-    contact_client.connect()
-    contacts = contact_client.get_all()
-    contact_client.get_by_number('')
-    contact_client.close()
+    chat = messaging.get_chat(242)
+    print(chat)
+    for m in chat.messages:
+        print(m)
+
+    messaging.close()
 
 
 if __name__ == '__main__':

@@ -10,15 +10,17 @@ class ContactClient(Client):
     def get_all(self) -> [Contact]:
         res = []
         for row in self.cur.execute(
-                'select c.ZFIRSTNAME, c.ZLASTNAME, a.ZFULLNUMBER from ZABCDPHONENUMBER as a inner join ZABCDRECORD c on a.ZOWNER = c.Z_PK'):
+                'select c.ZFIRSTNAME, c.ZLASTNAME, a.ZFULLNUMBER '
+                'from ZABCDPHONENUMBER as a inner join ZABCDRECORD c on a.ZOWNER = c.Z_PK'):
             res.append(normalize_contact(row))
         return res
 
     def get_by_number(self, number):
         number = number.replace(' ', '').replace('+33', '')
         r = self.cur.execute(
-            'select c.ZFIRSTNAME, c.ZLASTNAME, a.ZFULLNUMBER from ZABCDPHONENUMBER as a inner join ZABCDRECORD c on a.ZOWNER = c.Z_PK where a.ZFULLNUMBER like "%{}%"'.format(
-                number)).fetchone()
+            f'select c.ZFIRSTNAME, c.ZLASTNAME, a.ZFULLNUMBER \
+            from ZABCDPHONENUMBER as a inner join ZABCDRECORD c on a.ZOWNER = c.Z_PK \
+            where a.ZFULLNUMBER like "%{number}%"').fetchone()
         if r is None:
             return None
 
