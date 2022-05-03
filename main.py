@@ -10,6 +10,9 @@ def main():
 
     chat = messaging.get_chat(242)
     print(chat)
+
+    messaging.send(chat.contact.phone_number, 'Hey!')
+
     for m in chat.messages:
         print(m)
 
