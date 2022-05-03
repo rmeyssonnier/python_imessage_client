@@ -8,4 +8,4 @@ This project is openning this database and provide a simple queries.
 ## How to use it ?
 Project is build... So, be patient or curious... 🏗
 
-Developed by Robin Meyssonnier
+Developed by Robin Meyssonnier 🦄
