@@ -1,15 +1,11 @@
-from typing import Optional
-
-from pymessage.chat import Chat
-from pymessage.chat_client import ChatClient
-from pymessage.contact import Contact
-from pymessage.contact_client import ContactClient
-from pymessage.tools import get_contact_db
 import os
-import subprocess
+from typing import Optional
+from pymessage.models.chat import Chat
+from pymessage.clients.chat_client import ChatClient
+from pymessage.models.contact import Contact
+from pymessage.clients.contact_client import ContactClient
 from time import sleep
-from shlex import quote
-from shortcuts import Shortcut, actions
+from pymessage.tools.tools import get_contact_db
 
 
 class Messaging:
@@ -46,7 +42,7 @@ class Messaging:
 
     def send(self, phone, message):
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        relative_path = 'send.scpt'
+        relative_path = 'tools/send.scpt'
         path = f'{dir_path}/{relative_path}'
         os.system('osascript {} {} "{}"'.format(path, phone, message))
         sleep(1)

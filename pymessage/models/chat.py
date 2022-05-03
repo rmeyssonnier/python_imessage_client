@@ -1,5 +1,5 @@
-from pymessage.contact import Contact
-from pymessage.message import Message
+from pymessage.models.contact import Contact
+from pymessage.models.message import Message
 
 
 class Chat:

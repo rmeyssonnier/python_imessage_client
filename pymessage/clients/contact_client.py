@@ -1,6 +1,6 @@
-from pymessage.client import Client
-from pymessage.contact import Contact
-from pymessage.tools import normalize_contact
+from pymessage.clients.client import Client
+from pymessage.models.contact import Contact
+from pymessage.tools.tools import normalize_contact
 
 
 class ContactClient(Client):
