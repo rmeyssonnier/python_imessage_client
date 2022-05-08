@@ -11,7 +11,7 @@ class Client:
         if self.db is not None:
             self.close()
 
-        self.db = sqlite3.connect(self.path, uri=True)
+        self.db = sqlite3.connect(self.path, uri=True, check_same_thread=False)
         self.cur = self.db.cursor()
 
     def close(self):

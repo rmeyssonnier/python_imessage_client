@@ -31,15 +31,28 @@ class Messaging:
             chat = self.__set_contact_to_chat(chat)
             if load_messages:
                 chat.messages = self.chat_client.get_messages_for_chat(chat)
+                for m in chat.messages:
+                    if m.has_attachment:
+                        m.attachments = self.chat_client.get_attachments(m.guid)
         return chats
 
-    def get_conversation_by_id(self, chat_id) -> Optional[Chat]:
+    def get_conversation_by_id(self, chat_id, start, length) -> Optional[Chat]:
         chat = self.chat_client.get_chat_by_id(chat_id)
         if chat is None:
             return None
         chat = self.__set_contact_to_chat(chat)
-        chat.messages = self.chat_client.get_messages_for_chat(chat)
+        chat.messages = self.chat_client.get_messages_for_chat(chat.id, start, length)
+        for m in chat.messages:
+            if m.has_attachment:
+                m.attachments = self.chat_client.get_attachments(m.guid)
         return chat
+
+    def get_messages(self, chat_id, start, length) -> Optional[Chat]:
+        messages = self.chat_client.get_messages_for_chat(chat_id, start, length)
+        for m in messages:
+            if m.has_attachment:
+                m.attachments = self.chat_client.get_attachments(m.guid)
+        return messages
 
     def send(self, phone, message):
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -55,3 +68,6 @@ class Messaging:
             chat.contact.name = 'Unknown'
             chat.contact.phone_number = chat.chat_identifier
         return chat
+
+    def get_attachment(self, attachment_id):
+        return self.chat_client.get_attachment_by_id(attachment_id)

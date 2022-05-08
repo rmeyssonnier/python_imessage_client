@@ -1,5 +1,5 @@
 class Message:
-    def __init__(self, guid, text, service, date, date_read, destination_caller_id, is_from_me):
+    def __init__(self, guid, text, service, date, date_read, destination_caller_id, is_from_me, has_attachment):
         self.guid = guid
         self.text = text
         self.service = service
@@ -7,6 +7,7 @@ class Message:
         self.date_read = date_read
         self.destination_caller_id = destination_caller_id
         self.is_from_me = is_from_me
+        self.has_attachment = has_attachment
 
     def __str__(self):
         if self.is_from_me:

@@ -6,12 +6,13 @@ class Chat:
     messages: [Message] = []
     contact: Contact = None
 
-    def __init__(self, id, guid, chat_identifier, service_name, last_read_message_timestamp):
+    def __init__(self, id, guid, chat_identifier, service_name, last_read_message_timestamp, last_activity):
         self.id = id
         self.guid = guid
         self.chat_identifier = chat_identifier
         self.service_name = service_name
         self.last_read_message_timestamp = last_read_message_timestamp
+        self.last_activity = last_activity
 
     def __str__(self):
         if len(self.messages) > 0:
